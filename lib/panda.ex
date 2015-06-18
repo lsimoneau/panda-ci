@@ -1,0 +1,2 @@
+defmodule Panda do
+end
