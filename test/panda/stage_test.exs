@@ -1,10 +1,13 @@
 defmodule Panda.StageTest do
   use ExUnit.Case
 
-  test "it executes a list of bash commands" do
-    assert "hello, stage\n" == Panda.Stage.run([
+  test "it executes a list of bash commands and sends the output back to the parent" do
+    Panda.Stage.start(self, %{ commands: [
       "echo 'hello, stage'"
-    ])
+    ] })
+
+    assert_receive({:ouptut, "hello, stage\n"})
+    assert_receive({:exit, 0})
   end
 
   test "it runs multiple commands" do
