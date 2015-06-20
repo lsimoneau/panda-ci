@@ -18,3 +18,8 @@ TODO
 * Git/GitHub integration
 * Distribution across nodes
 * Probably lots more things I can't think of off the top of my head
+
+License
+=======
+
+This software is licensed under the [MIT license](https://github.com/lsimoneau/panda-ci/blob/master/LICENSE.md)
