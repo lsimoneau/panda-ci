@@ -40,14 +40,23 @@ defmodule Panda.StageTest do
 
     assert_receive({:test_1, :output, "hello, stage\n"})
     assert_receive({:test_1, :exit, 1})
+    refute_receive({:test_1, :output, "houw are you?\n"})
   end
 
   test "it handles commands that return multiple lines of output" do
     Panda.Stage.execute(:test_1, self, %{ commands: [
-      "echo 'hello, stage\nhow are you?'"
+      "./test/sample_files/multiline_output.sh"
     ] })
 
-    assert_receive({:test_1, :output, "hello, stage\n"})
-    assert_receive({:test_1, :output, "how are you?\n"})
+    assert_receive({:test_1, :output, "foo\n"})
+    assert_receive({:test_1, :output, "bar\n"})
+  end
+
+  test "it captures output to stderr" do
+    Panda.Stage.execute(:test_1, self, %{ commands: [
+      "./test/sample_files/stderr_output.sh"
+    ] })
+
+    assert_receive({:test_1, :output, "error\n"})
   end
 end

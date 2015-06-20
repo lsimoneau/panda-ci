@@ -15,7 +15,7 @@ defmodule Panda.Stage do
   end
   defp run(name, parent, config, status) when status == 0 do
     [command|rest] = config.commands
-    proc = %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()})
+    proc = %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()}, err: {:send, self()})
     status = await(name, parent, pid)
     run(name, parent, %{config | commands: rest }, status)
   end
