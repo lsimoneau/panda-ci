@@ -5,6 +5,8 @@ defmodule Panda.Mixfile do
     [app: :panda,
      version: "0.0.1",
      elixir: "~> 1.0",
+     elixirc_paths: elixirc_paths(Mix.env),
+     compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -14,21 +16,25 @@ defmodule Panda.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :porcelain]]
+    [mod: {Panda, []},
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+                    :phoenix_ecto, :postgrex, :porcelain]]
   end
 
-  # Dependencies can be Hex packages:
+  # Specifies which paths to compile per environment
+  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
+
+  # Specifies your project dependencies
   #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type `mix help deps` for more examples and options
+  # Type `mix help deps` for examples and options
   defp deps do
-    [
-      {:porcelain, "~> 2.0.0"}
-    ]
+    [{:phoenix, "~> 0.13.1"},
+     {:phoenix_ecto, "~> 0.4"},
+     {:postgrex, ">= 0.0.0"},
+     {:phoenix_html, "~> 1.0"},
+     {:porcelain, "~> 2.0"},
+     {:phoenix_live_reload, "~> 0.4", only: :dev},
+     {:cowboy, "~> 1.0"}]
   end
 end

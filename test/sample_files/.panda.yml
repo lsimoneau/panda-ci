@@ -1,0 +1,2 @@
+test:
+  - echo "this is a passing test"

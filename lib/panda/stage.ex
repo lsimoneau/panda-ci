@@ -4,7 +4,7 @@ defmodule Panda.Stage do
 
   def execute(name, parent, config) do
     Enum.each(config.commands, fn(command) ->
-      proc = %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()})
+      %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()})
       await(name, parent, pid)
     end)
     run(name, parent, config, 0)
@@ -15,7 +15,7 @@ defmodule Panda.Stage do
   end
   defp run(name, parent, config, status) when status == 0 do
     [command|rest] = config.commands
-    proc = %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()}, err: {:send, self()})
+    %Proc{pid: pid} = Porcelain.spawn_shell(command, out: {:send,self()}, err: {:send, self()})
     status = await(name, parent, pid)
     run(name, parent, %{config | commands: rest }, status)
   end
