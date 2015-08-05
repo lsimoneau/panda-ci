@@ -29,12 +29,12 @@ defmodule Panda.Mixfile do
   #
   # Type `mix help deps` for examples and options
   defp deps do
-    [{:phoenix, "~> 0.13.1"},
-     {:phoenix_ecto, "~> 0.4"},
+    [{:phoenix, "~> 0.15.0"},
+     {:phoenix_ecto, "~> 0.8"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 1.0"},
+     {:phoenix_html, "~> 1.4"},
      {:porcelain, "~> 2.0"},
-     {:phoenix_live_reload, "~> 0.4", only: :dev},
+     {:phoenix_live_reload, "~> 0.5", only: :dev},
      {:cowboy, "~> 1.0"}]
   end
 end
